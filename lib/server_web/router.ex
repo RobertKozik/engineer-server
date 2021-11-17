@@ -11,18 +11,28 @@ defmodule ServerWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]  
+    plug :accepts, ["json"]
   end
-  
+
+  pipeline :authenticated do
+    plug ServerWeb.Authenticate
+  end
+
   scope "/api", ServerWeb do
     pipe_through :api
+
+    post "/login", SessionController, :new
+  end
+
+  scope "/api", ServerWeb do
+    pipe_through [:api, :authenticated]
 
     resources "/users", UserController, except: [:new, :edit]
   end
 
   scope "/", ServerWeb do
     pipe_through :browser
-    
+
     get "/", PageController, :index
   end
 

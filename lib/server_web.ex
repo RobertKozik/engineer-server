@@ -23,6 +23,7 @@ defmodule ServerWeb do
 
       import Plug.Conn
       import ServerWeb.Gettext
+      import ServerWeb.Authenticate
       alias ServerWeb.Router.Helpers, as: Routes
     end
   end

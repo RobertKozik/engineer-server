@@ -11,7 +11,7 @@ defmodule ServerWeb.UserController do
     def create(conn, %{"email" => email_, "name" => name_, "password" => password_}) do
         user = %User{email: email_, name: name_, password: password_}
         {_, struct} = Repo.insert user
-        render(conn, "create.json", user: user)
-    end 
+        render(conn, "create.json", user: struct)
+    end
 
 end
