@@ -11,7 +11,9 @@ defmodule ServerWeb.SessionController do
       render(conn, "new.json", token: token)
     else
       _ ->
-        render(conn, "new.json", token: "incorrect")
+        conn
+        |> send_resp(403, "wrong credintials")
+        |> halt
     end
   end
 
