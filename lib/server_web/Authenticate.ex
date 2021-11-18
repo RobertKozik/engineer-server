@@ -1,6 +1,5 @@
 defmodule ServerWeb.Authenticate do
   import Plug.Conn
-  import Ecto.Query
   require Logger
 
   alias Server.User
@@ -10,7 +9,6 @@ defmodule ServerWeb.Authenticate do
   end
 
   def call(conn, _opts) do
-
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          {:ok, data} <- Server.Token.verify(token),
          {:ok, user} <- get_user(data) do
