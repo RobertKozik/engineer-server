@@ -7,6 +7,7 @@ defmodule Server.User do
     field :name, :string
     field :password, :string
 
+    many_to_many :modules, Server.Module, join_through: "users_modules"
     timestamps()
   end
 

@@ -6,6 +6,8 @@ defmodule Server.Module do
     field :name, :string
     field :serial_id, :string
 
+    has_one :config, Server.Config
+    many_to_many :users, Server.User, join_through: "users_modules"
     timestamps()
   end
 
