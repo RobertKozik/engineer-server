@@ -1,7 +1,7 @@
 defmodule Server.Config do
   use Ecto.Schema
 
-  schema "distributors" do
+  schema "configs" do
     field :name, :string
     field :sampling_rate, :integer
     field :temperature_sensor, :boolean

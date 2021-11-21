@@ -5,7 +5,7 @@ defmodule Server.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    field :password, :string
+    field :password_hash, :string
 
     many_to_many :modules, Server.Module, join_through: "users_modules"
     timestamps()
@@ -14,7 +14,10 @@ defmodule Server.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password])
-    |> validate_required([:name, :email, :password])
+    |> cast(attrs, [:name, :email, :password_hash])
+    |> validate_required([:name, :email, :password_hash])
+    |> unique_constraint(:name)
+    |> unique_constraint(:email)
+    |> update_change(:password_hash, &Bcrypt.hash_pwd_salt/1)
   end
 end

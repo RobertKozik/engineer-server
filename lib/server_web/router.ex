@@ -21,7 +21,8 @@ defmodule ServerWeb.Router do
   scope "/api", ServerWeb do
     pipe_through :api
 
-    post "/login", SessionController, :new
+    post "/login", SessionController, :login
+    post "/register", SessionController, :register
   end
 
   scope "/api", ServerWeb do

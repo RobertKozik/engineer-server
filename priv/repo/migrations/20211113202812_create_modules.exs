@@ -8,5 +8,6 @@ defmodule Server.Repo.Migrations.CreateModules do
 
       timestamps()
     end
+    create unique_index(:modules, [:serial_id])
   end
 end

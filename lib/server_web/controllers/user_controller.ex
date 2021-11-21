@@ -8,10 +8,10 @@ defmodule ServerWeb.UserController do
         render(conn, "index.json", users: users)
     end
 
-    def create(conn, %{"email" => email_, "name" => name_, "password" => password_}) do
-        user = %User{email: email_, name: name_, password: password_}
-        {_, struct} = Repo.insert user
-        render(conn, "create.json", user: struct)
-    end
+    # def create(conn, %{"email" => email_, "name" => name_, "password" => password_}) do
+    #     user = %User{email: email_, name: name_, password: password_}
+    #     {_, struct} = Repo.insert user
+    #     render(conn, "create.json", user: struct)
+    # end
 
 end
