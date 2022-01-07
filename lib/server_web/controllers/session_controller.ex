@@ -8,7 +8,7 @@ defmodule ServerWeb.SessionController do
   def login(conn, %{"email" => email, "password" => password}) do
     with {:ok, user} <- authenticateUser(email, password) do
       token = Token.sign(user.id)
-      render(conn, "new.json", token: token)
+      conn|>json(%{token: token})
     else
       _ ->
         conn
@@ -24,7 +24,7 @@ defmodule ServerWeb.SessionController do
       {:ok, inserted_user} ->
         render(conn, "create.json", user: inserted_user)
 
-      {_, changeset} ->
+      {_, _changeset} ->
         conn
         |> send_resp(403, "user exists")
         |> halt

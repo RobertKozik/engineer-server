@@ -7,7 +7,7 @@ defmodule Server.User do
     field :name, :string
     field :password_hash, :string
 
-    many_to_many :modules, Server.Module, join_through: "users_modules"
+    many_to_many :modules, Server.Module, join_through: Server.UserModule
     timestamps()
   end
 
@@ -15,6 +15,7 @@ defmodule Server.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email, :password_hash])
+    |> cast_assoc(:modules, required: false)
     |> validate_required([:name, :email, :password_hash])
     |> unique_constraint(:name)
     |> unique_constraint(:email)

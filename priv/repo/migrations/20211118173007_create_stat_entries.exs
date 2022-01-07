@@ -10,6 +10,6 @@ defmodule Server.Repo.Migrations.CreateStatEntries do
       timestamps()
     end
 
-    create unique_index(:stat_entries, [:module_id])
+    # create unique_index(:stat_entries, [:module_id])
   end
 end
