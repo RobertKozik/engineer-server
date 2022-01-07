@@ -7,7 +7,8 @@ defmodule Server.Module do
     field :serial_id, :string
 
     has_one :config, Server.Config
-    many_to_many :users, Server.User, join_through: "users_modules"
+    many_to_many :users, Server.User, join_through: Server.UserModule
+    has_many :stats, Server.StatEntry
     timestamps()
   end
 
@@ -15,6 +16,11 @@ defmodule Server.Module do
   def changeset(module, attrs) do
     module
     |> cast(attrs, [:name, :serial_id])
-    |> validate_required([:name, :serial_id])
+    |> validate_required([:serial_id, :name])
+  end
+
+  def update_changeset(module, attrs) do
+    module
+    |> cast(attrs, [:name])
   end
 end
