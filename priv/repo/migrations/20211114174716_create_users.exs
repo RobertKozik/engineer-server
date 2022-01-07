@@ -5,9 +5,11 @@ defmodule Server.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :name, :string
       add :email, :string
-      add :password, :string
+      add :password_hash, :string
 
       timestamps()
     end
+
+    create unique_index(:users, [:email])
   end
 end

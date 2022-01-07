@@ -11,19 +11,42 @@ defmodule ServerWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]  
+    plug :accepts, ["json"]
   end
-  
+
+  pipeline :authenticated do
+    plug ServerWeb.Authenticate
+  end
+
   scope "/api", ServerWeb do
     pipe_through :api
 
+    post "/login", SessionController, :login
+    post "/register", SessionController, :register
+    post "/modules/:id/stats", StatsController, :create
+  end
+
+  scope "/api", ServerWeb do
+    pipe_through [:api, :authenticated]
+
+    # Create, update, delete user
     resources "/users", UserController, except: [:new, :edit]
+    # Create, update, delete module
+    resources "/modules", ModuleController, except: [:new, :edit] do
+      # update "/config", ModuleCOntroller, :update
+      put "/config", ConfigController, :update
+      patch "/config", ConfigController, :update
+      get "/stats", StatsController, :stats
+
+    end
+    # add module to user account
+    post "/modules/connect", ModuleController, :connect
   end
 
   scope "/", ServerWeb do
     pipe_through :browser
-    
-    get "/", PageController, :index
+
+    get "/admin", PageController, :index
   end
 
   # Other scopes may use custom stacks.
